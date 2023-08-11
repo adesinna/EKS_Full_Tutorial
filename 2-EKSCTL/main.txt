@@ -1,0 +1,24 @@
+This cli helps us to create and manage clusters on AWS.
+
+1. We install the AWS CLI on Ubuntu
+
+sudo apt-get update -y
+sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+aws --version
+
+
+2. Create IAM user with full admin access
+
+aws configure
+
+# Configure AWS CLI with provided values
+aws configure set aws_access_key_id
+aws configure set aws_secret_access_key
+aws configure set default.region us-west-1
+aws configure set default.output_format json
+
+
+aws ec2 describe-vpcs
