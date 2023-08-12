@@ -52,3 +52,88 @@ curl -sL "https://github.com/eksctl-io/eksctl/releases/latest/download/eksctl_ch
 tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
 
 sudo mv /tmp/eksctl /usr/local/bin
+
+
+
+
+AWS EKS CORE OBJECTS
+
+i. EKS Control Plane # the components of control plane
+ii. Worker Nodes & Node Groups # work nodes
+iii. Fargate Profiles(Serverless) # give you the nodes based on the resource it needs
+iv. VPC # the Virtual Private Cloud
+
+
+How to create cluster
+
+eksctl create cluster --name=gonje1 \
+                      --region=us-west-1 \
+                      --zones=us-west-1a,us-west-1b \
+                      --without-nodegroup
+
+note:
+This cluster does not have a worker node
+
+You can list the clusters you have
+
+eksctl get clusters
+
+
+To enable and use AWS IAM roles for Kubernetes service accounts on our EKS cluster,
+we must create & associate OIDC identity provider.
+
+eksctl utils associate-iam-oidc-provider \
+    --region us-west-1 \
+    --cluster gonje1 \
+    --approve
+
+
+Next we create key-pair
+
+Create a new EC2 Keypair with name as kube-demo
+This keypair we will use it when creating the EKS NodeGroup.
+This will help us to login to the EKS Worker Nodes using Terminal.
+
+
+
+Creating Node groups
+
+# Create Public Node Group
+eksctl create nodegroup --cluster=gonje1 \
+                       --region=us-west-1 \
+                       --name=gonje1-ng-public1 \
+                       --node-type=t3.medium \
+                       --nodes=2 \
+                       --nodes-min=2 \
+                       --nodes-max=4 \
+                       --node-volume-size=20 \
+                       --ssh-access \
+                       --ssh-public-key=kube-demo \
+                       --managed \
+                       --asg-access \
+                       --external-dns-access \
+                       --full-ecr-access \
+                       --appmesh-access \
+                       --alb-ingress-access
+
+# List EKS clusters
+eksctl get cluster
+
+# List NodeGroups in a cluster
+eksctl get nodegroup --cluster=gonje1
+
+# List Nodes in current kubernetes cluster
+kubectl get nodes -o wide
+
+# Our kubectl context should be automatically changed to new cluster
+kubectl config view --minify
+
+
+We can login to the worker nodes
+
+ssh -i kube-demo.pem ec2-user@<Public-IP-of-Worker-Node>
+
+
+Delete cluster
+
+eksctl delete cluster gonje1
