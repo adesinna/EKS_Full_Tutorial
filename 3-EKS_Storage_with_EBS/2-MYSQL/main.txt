@@ -1,0 +1,10 @@
+Storage Class:
+"StorageClass" is an abstraction that defines how storage resources
+ are provisioned and managed for persistent volumes.
+
+
+Test MSQL
+
+kubectl exec -it <mysql-pod-name> -- /bin/bash
+
+mysql -h svc-ip -P 3306 -u root -p
