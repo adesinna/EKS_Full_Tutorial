@@ -1,1 +1,4 @@
 We are going to cover a lot of Kubernetes concepts, AWS services, DevOps and Mircoservices.
+
+
+This will be used for gonje project

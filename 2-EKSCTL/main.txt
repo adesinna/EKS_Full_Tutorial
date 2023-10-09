@@ -1,6 +1,6 @@
 This cli helps us to create and manage clusters on AWS.
 
- uname -m # to check the type of linux you are using
+uname -m # to check the type of linux you are using
 aarch = arm
 
 1. We install the AWS CLI on Ubuntu
