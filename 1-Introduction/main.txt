@@ -2,3 +2,5 @@ We are going to cover a lot of Kubernetes concepts, AWS services, DevOps and Mir
 
 
 This will be used for gonje project
+
+All the K8s preliminaries are covered in the K8s courses I have.
