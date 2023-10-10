@@ -1,0 +1,82 @@
+Containers are completely isolated environments which containers everything that an application needs to run.
+
+The image shows the difference between VM and Docker containers
+
+
+Docker Commands
+===============
+
+docker pull image_name:tag
+    This will pull the image from docker hub
+
+docker run image_name:tag
+    This will run an instance(container) of the image
+
+docker images
+    This will show the list of images present in the docker engine
+
+docker ps
+    This shows all the running containers
+
+
+docker ps -a
+    This shows all the presently running and stopped containers
+
+
+docker stop container_id
+    This will stop the container that is running
+
+
+docker start container_id
+    This will start a stop container
+
+docker rmi image_id
+    This will remove the image
+
+docker rm -f $(docker ps -aq)
+    Remove all containers
+
+docker rmi -f $(docker images -aq)
+    Remove all images
+
+docker volume rm $(docker volume ls -q)
+    Remove all volumes
+
+docker exec -it container_id/name /bin/bash
+
+
+
+
+docker run redis:tag
+    This allows you to use the version which the tag indicates the version
+
+
+docker run -d --name apache2-container -e TZ=UTC+1 -p 8080:80 -v /srv/www/html:/var/www/html ubuntu/apache2:2.4-22.04_beta
+
+    This shows the port and volume mapping host:container, and the time zone alone with the
+
+
+docker inspect container_id
+    This gives the details on the container
+
+
+docker logs container_id
+    This shows the logs
+
+
+
+
+
+
+Namespace tricks the container to make it think it has its on process but it is a lie
+while Cgroups restricts the resource it can use.
+
+cd /var/lib/docker This is where all data is stored
+
+
+docker run  --mount type=bind,source=/data/mysql,target=/var/lib/mysql
+
+
+use 20G and t3 medium
+docker compose build
+docker compose up -d
