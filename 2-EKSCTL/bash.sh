@@ -40,3 +40,5 @@ tar -xzf eksctl_$PLATFORM.tar.gz -C /tmp && rm eksctl_$PLATFORM.tar.gz
 sudo mv /tmp/eksctl /usr/local/bin
 
 echo "AWS CLI setup, kubectl and eksctl installation completed."
+
+exit
