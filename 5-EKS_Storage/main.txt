@@ -1,0 +1,28 @@
+EKS can use 3 types of storage namely,
+
+EBS CSI Driver
+
+EFS CSI Driver
+
+FSx for Luster CSI
+
+CSI means container storage interface
+
+
+EBS:
+    It provides a block storage volumes for use with EC2 and Container instances, they are independent of the container,
+    and they can be persisted.
+
+    They can be dynamically change the configuration of a volume attached to an instance.
+
+    It is recommended for data that must be quickly accessible and require long time persistence.
+
+    It is great for database style application that relies on random reads and write, and to apps
+    that performs long continuous reads and writes.
+
+
+
+
+
+
+

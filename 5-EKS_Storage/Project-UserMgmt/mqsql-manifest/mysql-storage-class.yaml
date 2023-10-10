@@ -1,0 +1,8 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer # this configuration indicates that volumes will be dynamically provisioned
+                                        # using AWS EBS when they are requested by a Pod, and the binding of the volume
+                                        # to the Pod will wait until the first Pod using the PersistentVolume claims the volume.
