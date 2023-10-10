@@ -1,0 +1,49 @@
+Stateless and Stateful Apps:
+
+    Stateless Applications are apps that do not need any data for it to start working, while
+    stateful apps needs data for the container to start.
+
+
+NFS is a shared storage that is independent of the nodes. It will be outside the cluster and every pod can access it with
+its pvc. It is better than host path.
+
+
+1. Install NFS on the external node
+
+    apt install nfs-kernel-server
+
+
+2. Create directory to expose to clients
+
+    mkdir /var/nfs
+
+
+3. Change the permission
+
+    sudo chown -R nobody:nogroup /var/nfs
+
+    sudo chmod 777 /var/nfs # access to the server
+
+4. Expose the directory
+
+    vim /etc/exports
+
+
+    /var/nfs *(rw,sync,no_root_squash,no_subtree_check) # append this
+
+
+5. Restart NFS
+    sudo systemctl restart nfs-kernel-server
+
+
+6. On each node
+
+    sudo apt update  # or use your distribution's package manager
+    sudo apt install nfs-common
+
+
+7. Create the deployment
+
+8. It deletes all data inside the container at first, so you c
+
+

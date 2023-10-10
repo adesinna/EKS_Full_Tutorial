@@ -1,0 +1,17 @@
+This gives users to a role, this roles have a set of permission
+Rolebinding binds the roles to the user
+
+kubectl get roles
+
+kubectl get rolebindings
+
+
+kubectl auth can-i create deployments # to see what you can do
+
+kubectl auth can-i create deployments --as dev-user # to see what other user can do if you an admin
+
+
+
+ClusterRoles and ClusterRolesBinding
+
+These are the RBAC for cluster wide resources

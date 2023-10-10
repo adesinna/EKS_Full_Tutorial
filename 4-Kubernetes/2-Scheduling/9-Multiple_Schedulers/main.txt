@@ -1,0 +1,4 @@
+You can write you own kubernetes scheduler which can be the main scheduler or be a supporting scheler
+
+To deploy additional scheduler, we add it as a pod. We do more of this in the kubeadm
+

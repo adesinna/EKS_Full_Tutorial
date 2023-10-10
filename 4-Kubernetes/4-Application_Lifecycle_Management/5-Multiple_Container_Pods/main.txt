@@ -1,0 +1,1 @@
+This is a pod that contains two containers, share the same network inside the pod.

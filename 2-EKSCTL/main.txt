@@ -131,8 +131,7 @@ kubectl config view --minify
 
 We can login to the worker nodes
 
-ssh -i kube-demo.pem ec2-user@<Public-IP-of-Worker-Node>
-
+ssh -i kube-demo.pem ec2-user@<Public-IP-of-Worker-Node>  # add the key before you login
 
 Delete cluster
 

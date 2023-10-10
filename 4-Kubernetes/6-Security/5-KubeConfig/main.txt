@@ -1,0 +1,16 @@
+This is used to authenticate users with certificates, using the kubectl api call.
+
+kubectl --kubeconfig=./actk8s-kubeconfig.yaml get pods
+
+By the default is looks for the kubeconfig file in ~/.kube/config
+
+It contains:
+    --server
+    -- client-key
+    -- client-certifcate
+    -- certificate authority
+
+
+cluster maps the user to the cluster
+
+kubectl config use-context context_name # would use this context

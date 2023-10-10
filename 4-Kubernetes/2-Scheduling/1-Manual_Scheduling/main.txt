@@ -1,0 +1,9 @@
+Every pod has a field called nodeName by default, which is not set, the scheduler identifies these pods and place them to
+the appropriate nodes.
+
+See 1-node_name.yaml as an example
+
+
+Suppose the pod is created and there is no scheduler, the k8 will not allow you to use nodeName to assign pod to a node,
+instead, you will create a binding object and send a post request the binding api in a json format
+

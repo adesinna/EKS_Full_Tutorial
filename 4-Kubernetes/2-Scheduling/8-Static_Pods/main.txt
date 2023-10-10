@@ -1,0 +1,31 @@
+Suppose a node is not attached to the master node, the yaml files should be  /etc/kubernetes/manifests
+It will try to keep the pods alive till the file is removed. These pods are known as static
+It is only pods you can create this way
+
+
+It configured in the service of the kubelet # kubelet.service file
+
+--pod-manifest-path=/etc/Kubernetes/manifest \\
+
+or
+--config=kubeconfig.yaml #
+    in this file put
+    staticPodPath: /etc/Kubernetes/manifest/kubeconfig.yaml
+
+Any of the two methods would work
+
+It now use docker ps to see the pods
+
+Reason we use static pods, it can be use it to deploy the control plane on each nodes
+
+kubectl get pods -A # all pods the node name is appended to it is called static pods
+
+cat /var/lib/kubelet/config.yaml # this is where you see the static pods path if it is not at /etc/kubernetes/manifests/
+
+create a static pod in /etc/kubernetes/manifests/
+
+To go to a node
+kubectl get nodes node_name -o wide
+    ssh internal_ip_of_node
+
+kubectl run --restart=Never --image=busybox:1.28.4 static-busybox --dry-run=client -o yaml --command -- sleep 1000 > /etc/kubernetes/manifests/static-busybox.yam

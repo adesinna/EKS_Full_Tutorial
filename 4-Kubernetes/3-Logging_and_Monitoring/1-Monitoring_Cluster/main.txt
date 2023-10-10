@@ -1,0 +1,12 @@
+Metric Server:
+    This get all the metrics from the k8 pods and nodes.
+    The kubelet contains cAdvisor which retrieve performance and expose it to the kube-api-server
+
+git clone https://github.com/kubernetes-sigs/metrics-server.git
+cd metrics-server
+
+kubectl apply -f .
+
+kubectl top nodes # this we show you performance of nodes
+
+kubectl top pods # this we show you performance of pods

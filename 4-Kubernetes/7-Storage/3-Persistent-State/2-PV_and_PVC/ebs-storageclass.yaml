@@ -1,0 +1,48 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-storage-class
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2 # Change this to the desired EBS volume type
+reclaimPolicy: Delete # Change this if you want to retain volumes
+allowVolumeExpansion: true
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: example-ebs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-storage-class # Reference the StorageClass here
+  resources:
+    requests:
+      storage: 10Gi # Specify the requested storage size
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:latest
+        volumeMounts:
+        - name: my-volume
+          mountPath: /path/in/container # Specify the mount path in the container
+      volumes:
+      - name: my-volume
+        persistentVolumeClaim:
+          claimName: example-ebs-pvc # Specify the name of your PVC

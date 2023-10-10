@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ebs-example
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - name: ebs-volume
+          mountPath: /data  # Mount the EBS volume at this path in the container
+  volumes:
+    - name: ebs-volume
+      awsElasticBlockStore:
+        volumeID: <your-ebs-volume-id>  # Replace with your EBS volume ID
+        fsType: ext4  # You can specify the filesystem type (ext4 is an example)

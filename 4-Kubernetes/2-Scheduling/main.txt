@@ -1,0 +1,287 @@
+Scheduling is the way pods are place on the nodes, they are based on a set of rules.
+
+When creating your pods, there is an empty field called nodeName which is empty by default, the scheduler would now assign
+a node to each pod based on the best node that suits it. If a pod is already created, you will need to bind it to a node manually
+
+
+kubectl get pods --namespace kube-system # to see all the k8 components pods
+
+1.Manually Scheduling:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  nodeName: node01  # Assign the Pod to the node with the name "node01"
+  containers:
+  - image: nginx
+    name: nginx
+
+
+
+
+
+kubectl get pods -watch
+
+kubectl replace --force -f nginx.yaml # deletes the pods and replace it with the changes
+
+kubectl get pods -o wide # to see where it is running
+
+
+2. Labels and Selectors:
+
+Labels are properties of k8s objects, selectors use labels for filtering.
+
+kubectl get pods --selector key1=val1
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+  annotations: # this is used for information for integration with some external tools
+    buildversion: 1.34
+spec:
+  replicas: 3
+  selector: # it would select the labels that match
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+
+
+3. Taints and Tolerations:
+
+This is a pod to node relationship, the ones it should accept or the one it should reject.
+
+Taints are set on nodes while toleration are set on pods, if a taint  is tolerant of pod, it allows it to be created there.
+
+
+kubectl taint nodes node_name key=value:taint-effect
+
+Sure! Imagine you have a big playground (your Kubernetes cluster) with several play areas (nodes) for different
+activities (running containers). Now, let's talk about "taints" and how they work:
+
+Taints are like special signs that you put on a specific play area (node) to say, "Hey, only certain kids (pods)
+are allowed to play here!" These signs have two parts: a "key" and a "value." For example, you could have a sign that says "Color=Red."
+
+Next, we have "taint effects," which describe how the sign affects the playground. There are three types:
+
+1. "NoSchedule" sign means that only kids with a matching sign in their hand (tolerations) are allowed to play
+on that specific area (node). Other kids without the right sign can't join the fun there.
+
+2. "PreferNoSchedule" sign is a bit more relaxed. It suggests that kids without the matching sign should try
+to play somewhere else, but if they really need to play there, they can.
+
+3. "NoExecute" sign is strict. It not only stops new kids without the right sign from playing but even kicks
+out any kids already playing there without the right sign!
+
+So, when you "apply a taint" to a node, it's like putting one of these special signs on that play area.
+You specify the "key" and "value" of the sign, and you pick one of the "taint effects" to say how strict you want it to be.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+  tolerations:
+    - key: app
+      operator: Equal
+      value: web
+      effect: NoSchedule
+
+
+
+
+kubectl describe node node01 | grep -i Taint # to see the taint on a node
+
+kubectl taint nodes node_name key=value:taint-effect- # notice the -, it is to remove the taint
+
+
+4.Node Selector:
+You need to first label the node, and define the selector in the definition file
+
+kubectl label node node01 size=Large
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+  nodeSelector:
+    size: Large
+
+
+
+5.Node Affinity
+This allows you to use or on not operators for the nodes
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: app
+            operator: In  # NotIn, Exits(checks if the key exist and dont care about the values)
+
+            values:
+            - web
+            - kas
+            - bass
+
+Type of node affinity
+requiredDuringSchedulingIgnoredDuringExecution
+This must find the node
+
+prefferedDuringSchedulingIgnoredDuringExecution
+Find another node if it node label doesnt exist
+
+The best practice is to use the combination of Taints and Tolerations with NodeAffinity
+
+
+
+5.Resources Requirements and Limits:
+Every pod needs an amount of resources for it to run on the node.
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sample-pod
+spec:
+  containers:
+  - name: sample-container
+    image: your-container-image:latest
+    resources:
+      requests:
+        memory: "4Gi"
+        cpu: "1"
+      limits:
+        memory: "5Gi"
+        cpu: "2"
+
+The scheduler looks for a node that have this resource available, the limit is the max it can consume.
+
+The best is to just set request without using limits.
+
+
+Limit range would affect all the pods in the namespace
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: resource-limits
+spec:
+  limits:
+  - type: Container
+    default:
+      memory: 512Mi
+      cpu: 500m
+    defaultRequest:
+      memory: 256Mi
+      cpu: 100m
+    max:
+      memory: 2Gi
+      cpu: 2
+
+You can always set limit on nodes too in the namespace
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: resource-quota
+spec:
+  hard:
+    requests.cpu: "2"
+    requests.memory: 4Gi
+    limits.cpu: "4"
+    limits.memory: 8Gi
+    pods: "10"
+
+
+
+
+6.Daemon Sets
+They are like replica sets they create a replica of a pod on every node, like kube-proxy of each worker nodes
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: my-daemonset
+spec:
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: nginx:latest
+
+
+kubectl get daemonsets
+
+
+
+Static Pods:
+Suppose a node is not attached to the master node, the yaml files should be  /etc/kubernetes/manifests
+It will try to keep the pods alive till the file is removed. These pods are knowned as static
+It is only pods you can create this way
+
+
+It configured in the service of the kubelet # kubelet.service file
+
+--pod-manifest-path=/etc/Kubernetes/manifest \\
+
+or
+--config=kubeconfig.yaml #
+    in this file
+    staticPodPath: /etc/Kubernetes/manifest
+
+Any of the two methods would work
+
+It now use docker ps to see the pods
+
+Reason we use static pods, it can be use it to deploy the control plane on each nodes
+
+kubectl get pods -A # all pods the node name is appended to it is called static pods
+
+cat /var/lib/kubelet/config.yaml # this is where you see the static pods path if it is not at /etc/kubernetes/manifests/
+
+create a static pod in /etc/kubernetes/manifests/
+
+To go to a node
+kubectl get nodes node_name -o wide
+    ssh internal_ip_of_node
+
+
+7.Multiple Schedulers
+You choose to add more schedulers to satisfy you special pods needs.

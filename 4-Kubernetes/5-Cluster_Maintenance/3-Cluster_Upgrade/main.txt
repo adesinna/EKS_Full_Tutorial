@@ -1,0 +1,15 @@
+The component can have different version, but the kube-api-server must be higher.
+
+Kubectl can be higher or lower than kube-api
+
+kubeadm upgrade plan # shows
+
+kubeadm upgrade apply
+
+ON cloud:
+    This will be done on the UI of the cloud.
+
+
+Remember you have to upgrade one version at a time and it deoes upgrade kubelet, just follow the link below
+
+https://v1-26.docs.kubernetes.io/docs/tasks/administer-cluster/kubeadm/kubeadm-upgrade/

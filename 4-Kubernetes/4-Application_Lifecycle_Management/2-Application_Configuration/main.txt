@@ -1,0 +1,18 @@
+Commands:
+In docker, if you want to pass a command
+
+CMD command parameter1
+
+---
+ENTRYPOINT command
+
+CMD param
+---
+
+see my-pod.yaml
+
+Environment variable:
+    These are variables that can change things in your containers.
+
+
+

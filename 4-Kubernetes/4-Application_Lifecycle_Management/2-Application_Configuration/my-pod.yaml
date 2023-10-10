@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+  - name: my-container
+    image: my-image:latest
+    command: ["echo"] # this is like entrypoint in docker
+    args: ["Hello, Kubernetes!"] # this is like cmd in docker

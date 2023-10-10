@@ -1,0 +1,8 @@
+ArgoCD uses service account to access the cluster, service accounts are used
+by bots.
+
+kubectl create serviceaccount svc_acc_name
+
+
+It creates a secret token automatically, which is used as a volume mount inside the pod if the
+3rd party is running inside the cluster.

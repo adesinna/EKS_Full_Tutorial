@@ -1,0 +1,63 @@
+We are going to use Openssl to generate certificate
+
+
+Root Certificate:
+
+openssl genrsa -out ca.key 2048  # private key
+
+openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr # certificate signing request
+
+openssl x509 -req in ca.csr -signkey ca.key -out ca.crt  # signed certificate
+
+
+
+Client Certificate:
+
+Admin user Certificate:
+openssl genrsa -out admin.key 2048 # private
+
+openssl req -new -key admin.key -subj "/CN=kube-admin/O=system:master" -out admin.csr # public crt with group system:masters (for admin), which is a must
+
+openssl x509 -req -in admin.csr -CA ca.crt -CAkey ca.key -out admin.crt #signed crt
+
+
+All the alternative names for a server can be passed in the [alt_names] field in the configuration file.
+
+
+
+
+In the ca, all system components must be prefixed with system
+CN=SYSTEM:KUBE-CONTROLLER-MANAGER # same for KUBE-SCHEDULER, KUBE-PROXY
+
+
+The ca root crt, should be in all the components both clients and servers
+
+for kubelets, they are named after their nodes
+
+system:node:node2 #format group system:nodes
+
+We use this certificates to get into our cluster
+
+
+
+How to view certificates:
+
+for kube-apiserver:
+
+/etc/kubernetes/manifests/kube-apiserver.yaml  # this is the location and check the command list
+
+Note:
+When a component acts as a client it will need 3 certs, because it will need to use a ca certificate to sign
+and server just need two.
+
+
+To view openssl cert
+
+openssl x509 -in /etc/kubernetes/pki/apiserver.crt -text -noout # you will be able to view the cert details
+
+
+kubectl logs etcd-master # to check the logs for the pod returning the etcd server
+
+
+
+

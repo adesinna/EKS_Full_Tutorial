@@ -1,0 +1,22 @@
+There are times you might need to take down a node.
+
+The time it takes a node to restart up is called pod-eviction-timeout which us 5 mins by default
+
+
+If the pod is part of a replica set, if the node fails, it will schedule it on the other node to make sure its quota is fulfilled
+
+When a node is not coming up, we can drain the node of its pods, so they can be created
+on another node.
+
+kubectl drain node_name # This will terminate all the pods, and recreate it on another and node pod will be scheduled on it when its comes back
+
+Now when the node is rebooted, you can schedule pods on it
+
+kubectl uncordon node_name # allowed it to be scheduled, by removing the restriction
+
+kubectl cordon node_name # makes sure that pods are not scheduled on the node, but it does not terminate or remove existing pods on the node
+
+kubectl get pods -o wide # to see the node these pods are
+
+
+kubectl drain node01 --ignore-daemonsets # because it wont drain the daemonsets

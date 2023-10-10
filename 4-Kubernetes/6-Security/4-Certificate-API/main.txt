@@ -1,0 +1,10 @@
+This allows another user to authenticate to the server, it needs to be signed so users can use it to authenticate.
+
+
+Certificate APIs:
+Controller Manager is the one that signs the certificates. It uses api call
+
+
+kubectl get csr
+
+kubectl certificate approve/deny csr_name
