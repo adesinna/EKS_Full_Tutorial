@@ -1,0 +1,17 @@
+Suppose each pod needs a volume, and you don't want to start creating each volumes with its own pod, a pv is needed, the
+pv would give each pod its own storage and the pods would access this volume with its pvc.
+
+
+To create a Persistent Volume (PV) template for an Amazon Elastic Block Store (EBS) volume in Kubernetes,
+you typically don't define the PV directly. Instead, you use a StorageClass that Kubernetes can use to
+dynamically provision EBS volumes when PersistentVolumeClaims (PVCs) are created.
+
+
+Storage Class:
+    Storage class would allow you dynamically provision it.
+
+
+
+Stateful Sets:
+    They retain the name so that a set replication can take place just like mongodb replica set.
+

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-example
+spec:
+  containers:
+    - name: my-container
+      image: nginx
+      volumeMounts:
+        - name: hostpath-volume
+          mountPath: /data  # Mount the hostPath volume at this path in the container
+  volumes:
+    - name: hostpath-volume
+      hostPath:
+        path: /tmp/dummy-data  # Dummy path on the host machine

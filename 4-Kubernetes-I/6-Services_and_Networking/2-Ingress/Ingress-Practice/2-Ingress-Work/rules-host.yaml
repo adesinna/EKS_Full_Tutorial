@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shanana-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: / #  It is used to rewrite the URL path before it's sent to the backend service. In this case, it's rewriting the URL path to /
+spec:
+  rules:
+  - host: site1.shananadevops.xyz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app1-nginx-svc
+            port:
+              number: 80
+  - host: site2.shananadevops.xyz
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app2-nginx-svc
+            port:
+              number: 80

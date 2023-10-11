@@ -1,0 +1,17 @@
+- To see the ingress controller
+
+    kubectl get pods -n ingress-nginx  # this is where the ingress controller would be deployed as a pod!
+
+
+
+-  The deployment of the ingress controller can be seen in
+
+    kubectl get deploy -n ingress-nginx
+
+- To see the ingress resource
+
+    kubectl get ingress -A
+
+- If the app does not have /pay running in the pod, but you want it to
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /

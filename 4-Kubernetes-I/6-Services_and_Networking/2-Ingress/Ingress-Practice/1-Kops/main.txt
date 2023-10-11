@@ -1,0 +1,80 @@
+We use kops to set up our cluster on aws
+
+1. Create an instance for your kops server
+
+2. Create s3 bucket in the same region where the kop server is
+
+    bucket name: kops-shanana-state
+
+3. Create IAM role and give it admin access
+
+    use the access keys
+
+4. Get a domain and use ns record in provider
+
+    shananadevops.xyz
+
+
+5.  Generate key
+
+    ssh-keygen -t rsa -f ~/.ssh/id_rsa -N ""
+
+7. Update the instance and install aws cli
+
+    sudo apt update && sudo apt install awscli -y
+
+8. Configure aws cli
+
+    aws configure
+
+9. Download kubectl
+
+    curl -LO https://dl.k8s.io/release/v1.28.1/bin/linux/amd64/kubectl
+
+    sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+    chmod +x kubectl
+
+    sudo mkdir -p ~/.local/bin
+
+    sudo mv ./kubectl ~/.local/bin/kubectl
+
+    kubectl version --client
+
+10. Install kops 1.26.4
+
+    wget https://github.com/kubernetes/kops/releases/download/v1.26.4/kops-linux-amd64
+
+    chmod +x kops-linux-amd64
+
+    sudo mv kops-linux-amd64 /usr/local/bin/kops
+
+    kops version
+
+
+11. Verify Domain
+
+    nslookup -type=ns shananadevops.xyz
+
+12. Create Cluster
+
+    kops create cluster --name=kops-k8-cluster \
+    --state=s3://kops-shanana-state \
+    --zones=us-west-1a, us-west-2b \
+    --node-count=2 \
+    --node-size=t3.small \
+    --master-size=t3.medium \
+    --dns-zone=shananadevops.xyz \
+    --node-volume-size=8 \
+    --master-volume-size=8
+
+    kops update cluster --name=shananadevops.xyz --state=s3://kops-shanana-state --yes --admin
+
+    wait for 10mins
+
+    kops validate cluster --state=s3://kops-shanana-state
+
+13. You can delete the cluster
+
+    kops delete cluster --name=shananadevops.xyz --state=s3://kops-shanana-state --yes
+

@@ -1,0 +1,8 @@
+Volume is a way to store the data of the pod, one way to do this is to store it on the host.
+
+It is not a good idea, since if anything happens to the node, then the volume is gone, also the external volume path
+would not be persisted on every node, incase the pod was recreated in another node.
+
+Storage solution is available for this problem, like NFS or other external storage like EBS that is independent of the
+cluster.
+

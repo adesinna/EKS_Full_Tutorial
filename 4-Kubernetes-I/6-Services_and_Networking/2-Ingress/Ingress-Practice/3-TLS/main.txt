@@ -1,0 +1,10 @@
+1. install cert manager
+    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.0/cert-manager.crds.yaml
+
+2. Create Cluster Issuer
+
+3. Create Certs
+    site1-cert.yaml
+    site2.cert.yaml
+
+4. create ingress
