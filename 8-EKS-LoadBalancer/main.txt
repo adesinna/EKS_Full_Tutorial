@@ -1,0 +1,63 @@
+AWS offers different types of load balancers to cater to various use cases. Two commonly used types are Classic
+Load Balancer (CLB) and Network Load Balancer (NLB). Here's a comparison of the two:
+
+Classic Load Balancer (CLB):
+
+    - Layer 4 and Layer 7 Load Balancer: Classic Load Balancer operates at both Layer 4 (transport layer) and Layer 7
+      (application layer) of the OSI model, allowing it to balance traffic based on IP addresses and ports (Layer 4)
+       as well as route traffic based on content (Layer 7).
+
+    - Protocols and Features: Supports HTTP, HTTPS, TCP, and SSL/TLS protocols. Provides features like SSL termination,
+       sticky sessions, and health checks.
+
+    - Use Cases: Suitable for applications with basic load balancing requirements. CLB is an older service,
+      and for most use cases, it's recommended to use Application Load Balancer (ALB) or Network Load Balancer (NLB) instead, depending on the specific requirements.
+
+
+Network Load Balancer (NLB):
+
+    - Layer 4 Load Balancer: Network Load Balancer operates at Layer 4 of the OSI model,
+      allowing it to route traffic based on IP protocol data.
+
+    - Performance and Scalability: NLB is designed for high-performance, ultra-low-latency networking and can handle
+       millions of requests per second. It's ideal for applications that require extreme performance and scale.
+
+    - Static IP Address: NLB provides a static IP address, which is helpful for applications that require clients to
+       connect to a fixed IP address.
+
+    - Use Cases: Suitable for applications requiring high throughput, low latency, and scalability.
+        Commonly used for TCP/UDP-based services, gaming applications, IoT applications, and other high-performance use cases.
+
+
+
+
+Load balancer is used to access the port from the external, it will be nice if the cluster nodes are private,
+and it can only be accessed via load balancer.
+
+
+
+Private Node Group
+
+eksctl create nodegroup --cluster=eksdemo1 \
+                        --region=us-east-1 \
+                        --name=eksdemo1-ng-private1 \
+                        --node-type=t3.medium \
+                        --nodes-min=2 \
+                        --nodes-max=4 \
+                        --node-volume-size=20 \
+                        --ssh-access \
+                        --ssh-public-key=kube-demo \
+                        --managed \
+                        --asg-access \
+                        --external-dns-access \
+                        --full-ecr-access \
+                        --appmesh-access \
+                        --alb-ingress-access \
+                        --node-private-networking
+
+Verify the node group subnet routes to ensure it created in private subnets
+
+    Go to Services -> EKS -> eksdemo -> eksdemo1-ng1-private
+    Click on Associated subnet in Details tab
+    Click on Route Table Tab.
+    We should see that internet route via NAT Gateway (0.0.0.0/0 -> nat-xxxxxxxx)
