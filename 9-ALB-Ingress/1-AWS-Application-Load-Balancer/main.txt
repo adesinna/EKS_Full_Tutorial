@@ -3,3 +3,32 @@ ALB is a super advanced, next generation Load Balancer in AWS
 It supports both path and route based routing
 
 It supports routing based on the type of request
+
+
+ALB Ingress Controller:
+    This is just like Nginx Ingress controller, however, this one is peculiar to
+    AWS. It will trigger ALB for all the svc you want.
+
+
+    It supports two traffic modes
+
+    - Instance
+        Registers nodes within the cluster as target group for the alb.
+        Traffic is routed to the NodePort of the svc
+        It is the default
+
+        annotations:
+            alb.ingress.kubernetes.io/target-type: instance
+
+    - IP
+        Registers pods as target groups
+        This is used for fargate serverless
+
+
+        annotations:
+            alb.ingress.kubernetes.io/target-type: ip
+
+
+
+ALB Ingress Controller was renamed and redesigned to AWS Load Balancer Controller
+Can create both Application and Network LBs
