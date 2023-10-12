@@ -1,0 +1,7 @@
+Ingress Class is a k8 object use to associate the ingress resources to the controller.
+
+# Verify IngressClass Resource
+kubectl get ingressclass
+
+# Describe IngressClass Resource
+kubectl describe ingressclass my-aws-ingress-class
