@@ -1,5 +1,5 @@
 Suppose you build an application in a cluster, and use a nodePort to expose it to the outside world, but nodePort is not
-the best of a production grade application we can use a loadBalancer so you can point the DNS to the loadbalancer.
+the best of a production grade application we can use a loadBalancer, so you can point the DNS to the loadbalancer.
 
 But if you were to add new part to the site, you can us nginx to route the right part of the site.
 

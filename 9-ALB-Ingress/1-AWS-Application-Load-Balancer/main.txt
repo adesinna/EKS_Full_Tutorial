@@ -1,0 +1,5 @@
+ALB is a super advanced, next generation Load Balancer in AWS
+
+It supports both path and route based routing
+
+It supports routing based on the type of request
