@@ -263,6 +263,7 @@ CHECK-2: Verify Volume Mounts
       name: cert
       readOnly: true
 CHECK-3: Verify Volumes
+
   volumes:
   - name: cert
     secret:
