@@ -4,7 +4,7 @@ metadata:
   name: ingress-cpr-demo
   annotations:
     # Load Balancer Name
-    alb.ingress.kubernetes.io/load-balancer-name: cpr-ingress
+    alb.ingress.kubernetes.io/load-balancer-name: cpr-ingress # name of the lb you want it to create
     # Ingress Core Settings
     #kubernetes.io/ingress.class: "alb" (OLD INGRESS CLASS NOTATION - STILL WORKS BUT RECOMMENDED TO USE IngressClass Resource)
     alb.ingress.kubernetes.io/scheme: internet-facing
