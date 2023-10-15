@@ -1,0 +1,2 @@
+Suppose there are multiple frontends svc of different app, sending traffic to just one default backend makes no sense.
+
