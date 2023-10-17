@@ -1,0 +1,35 @@
+1- Register a new domain on aws :
+
+    Goto Services -> Route53 -> Registered Domains
+    Click on Register Domain
+    Provide desired domain: somedomain.com
+    Click on Add to cart and click on continue
+    Provide your Contact Details and click on Continue
+    Enable Automatic Renewal
+    Accept Terms and Conditions
+
+
+2- Create SSL certificate for the domain using certificate manager
+
+    Go to Services -> Certificate Manager -> Create a Certificate
+    Click on Request a Certificate
+
+        Choose the type of certificate for ACM to provide: Request a public certificate
+        Add domain names: *.yourdomain.com
+        Select a Validation Method: DNS Validation
+        Click on Confirm & Request
+
+    Validation
+
+        Click on Create record in Route 53
+
+    Wait for 5 to 10 minutes and check the Validation Status
+
+
+3- Add the SSL settings in the ingress
+
+    ## SSL Settings
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    # get the arn of the certificate, go to the certificate to get it
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:180789647333:certificate/d86de939-8ffd-410f-adce-0ce1f5be6e0d
+    alb.ingress.kubernetes.io/ssl-redirect: '443'   # this is for redirect

@@ -1,11 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress-cpr-demo
+  name: ingress-ssl-demo
   annotations:
     # Load Balancer Name
-    alb.ingress.kubernetes.io/load-balancer-name: cpr-ingress # name of the lb you want it to create
+    alb.ingress.kubernetes.io/load-balancer-name: ssl-ingress
     # Ingress Core Settings
+    #kubernetes.io/ingress.class: "alb" (OLD INGRESS CLASS NOTATION - STILL WORKS BUT RECOMMENDED TO USE IngressClass Resource)
     alb.ingress.kubernetes.io/scheme: internet-facing
     # Health Check Settings
     alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
@@ -16,8 +17,18 @@ metadata:
     alb.ingress.kubernetes.io/success-codes: '200'
     alb.ingress.kubernetes.io/healthy-threshold-count: '2'
     alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+    ## SSL Settings
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}, {"HTTP":80}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:180789647333:certificate/d86de939-8ffd-410f-adce-0ce1f5be6e0d
+    #alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-1-2017-01 #Optional (Picks default if not used)
+    alb.ingress.kubernetes.io/ssl-redirect: '443'   # redirect it from port 80
 spec:
   ingressClassName: my-aws-ingress-class   # Ingress Class
+  defaultBackend:
+    service:
+      name: app3-nginx-nodeport-service
+      port:
+        number: 80
   rules:
     - http:
         paths:
@@ -27,18 +38,11 @@ spec:
               service:
                 name: app1-nginx-nodeport-service
                 port:
-                  number: 80 # port of the service
+                  number: 80
           - path: /app2
             pathType: Prefix
             backend:
               service:
                 name: app2-nginx-nodeport-service
                 port:
-                  number: 80 # port of the service
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app3-nginx-nodeport-service
-                port:
-                  number: 80  # port of the service
+                  number: 80
