@@ -35,9 +35,9 @@ resource "aws_instance" "dove-inst" {
 }
 
 output "PublicIP" {
-  value = aws_instance.dove-inst.public_ip
+  value = aws_instance.dove-inst.public_ip  # prints value to the screen when you use terraform apply
 }
 
 output "PrivateIP" {
-  value = aws_instance.dove-inst.private_ip
+  value = aws_instance.dove-inst.private_ip # prints value to the screen when you use terraform apply
 }
