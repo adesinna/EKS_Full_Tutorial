@@ -1,0 +1,49 @@
+This will teach you how to use terraform.
+
+How to download terraform but, install awscli first
+
+Google terraform for your machine, and use the script
+
+#!/bin/bash
+
+# Install AWS CLI
+sudo apt-get update -y
+sudo apt install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Configure AWS CLI
+read -p "Enter your AWS Access Key ID: " aws_access_key_id
+read -p "Enter your AWS Secret Access Key: " aws_secret_access_key
+
+aws configure set aws_access_key_id "$aws_access_key_id"
+aws configure set aws_secret_access_key "$aws_secret_access_key"
+aws configure set default.region us-west-1
+aws configure set default.output_format json
+
+# Terraform installation
+wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update && sudo apt install terraform
+terraform -version
+
+
+
+- Initialize terraform
+    terraform init
+
+- Validate terraform
+    terraform validate
+
+- Format the script
+    terraform fmt
+
+- Get the preview using plan
+    terraform plan
+
+- Apply the configuration
+    terraform apply
+
+- To destroy
+    terraform destroy

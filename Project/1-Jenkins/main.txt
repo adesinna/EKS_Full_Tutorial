@@ -109,3 +109,6 @@ sudo certbot renew --dry-run # to renew the certificate
 sudo nginx -t
 
 sudo systemctl restart nginx
+
+
+Tools to install
