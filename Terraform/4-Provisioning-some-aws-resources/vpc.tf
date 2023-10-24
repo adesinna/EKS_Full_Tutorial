@@ -1,4 +1,4 @@
-resource "aws_vpc" "dove" {
+resource "aws_vpc" "dove" {   # this create a vpc
   cidr_block           = "10.0.0.0/16"
   instance_tenancy     = "default"
   enable_dns_support   = "true"
@@ -7,6 +7,8 @@ resource "aws_vpc" "dove" {
     Name = "dove-vpc"
   }
 }
+
+# creates private and public subnets
 
 resource "aws_subnet" "dove-pub-1" {
   vpc_id                  = aws_vpc.dove.id
@@ -72,12 +74,16 @@ resource "aws_subnet" "dove-priv-3" {
   }
 }
 
+# create internet gateway and associate it to the vpc
+
 resource "aws_internet_gateway" "dove-IGW" {
   vpc_id = aws_vpc.dove.id
   tags = {
     Name = "dove-IGW"
   }
 }
+
+# create route table and associate it with vpc and gateway
 
 resource "aws_route_table" "dove-pub-RT" {
   vpc_id = aws_vpc.dove.id
@@ -92,7 +98,7 @@ resource "aws_route_table" "dove-pub-RT" {
   }
 }
 
-
+# associate route table and public subnets
 resource "aws_route_table_association" "dove-pub-1-a" {
   subnet_id      = aws_subnet.dove-pub-1.id
   route_table_id = aws_route_table.dove-pub-RT.id
