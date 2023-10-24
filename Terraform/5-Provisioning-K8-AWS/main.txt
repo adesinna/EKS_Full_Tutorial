@@ -1,0 +1,14 @@
+1- Create terraform.tf
+
+    This will provision the dependencies
+
+
+2- Create vars.tf
+
+    This will create some variables
+
+3- Create main.tf
+
+4- Create vpc.tf
+
+5. eks and output
