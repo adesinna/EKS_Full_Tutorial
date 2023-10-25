@@ -111,4 +111,12 @@ sudo nginx -t
 sudo systemctl restart nginx
 
 
-Tools to install
+Tools to install:
+    Manage Jenkins > Tools
+
+        JDK Installation  # for java projects
+
+            Name: java11
+
+            JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
+
