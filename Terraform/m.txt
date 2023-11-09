@@ -1,0 +1,35 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./movie-blog-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - database
+    environment:
+      MONGO_URI: "mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_CLUSTER}:27017/${MONGO_DATABASE}"
+
+  frontend:
+    build:
+      context: ./movie-blog-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_BASE_URL: ${BACKEND_URL}
+
+  database:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    volumes:
+      - mongo-data:/data/db  # Create a named volume called "mongo-data"
+
+volumes:
+  mongo-data:  # Define the named volume

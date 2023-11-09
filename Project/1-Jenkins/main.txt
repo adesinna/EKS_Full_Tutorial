@@ -30,7 +30,7 @@ sudo systemctl status jenkins
     - login on UI
         access port 8080
 
-        cat /var/lib/jenkins/secrets/initialAdminPassword # this is the password
+        sudo cat /var/lib/jenkins/secrets/initialAdminPassword # this is the password
 
 
 
@@ -109,6 +109,21 @@ sudo certbot renew --dry-run # to renew the certificate
 sudo nginx -t
 
 sudo systemctl restart nginx
+
+
+SonarQube Scanner
+
+Build Timestamp
+
+Pipeline Maven Integration
+
+Pipeline Utility Steps
+
+docker pipeline
+
+docker
+
+slack notification
 
 
 Tools to install:

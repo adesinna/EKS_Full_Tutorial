@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt install openjdk-11-jdk -y
+sudo apt install openjdk-17-jdk -y
 sudo apt install maven -y
 
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
