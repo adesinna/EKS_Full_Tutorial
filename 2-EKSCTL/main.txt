@@ -116,6 +116,7 @@ eksctl create nodegroup --cluster=gonje1 \
                        --appmesh-access \
                        --alb-ingress-access
 
+
 # List EKS clusters
 eksctl get cluster
 

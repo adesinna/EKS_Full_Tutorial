@@ -43,7 +43,7 @@ docker volume rm $(docker volume ls -q)
     Remove all volumes
 
 docker exec -it container_id/name /bin/bash
-
+docker run -d -p 8000:8000 --env-file=.env
 
 
 

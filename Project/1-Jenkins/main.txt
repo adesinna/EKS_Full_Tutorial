@@ -38,15 +38,19 @@ sudo systemctl status jenkins
 
 2. Install Nginx on the Jenkins Instance
 
-sudo apt update
 sudo apt upgrade
+
+sudo apt update
+
 
 sudo apt install nginx
 
 systemctl status nginx
 
 
-sudo vim /etc/nginx/sites-available/ci.shananadevops.xyz   # point the record to the instance
+sudo vim /etc/nginx/sites-available/ci.gonje.com.au  # point the record to the instance
+
+
 
 
 # paste the code below
@@ -57,7 +61,7 @@ upstream jenkins{
 
 server{
     listen      80;
-    server_name ci.shananadevops.xyz;
+    server_name ci.gonje.com.au;
 
     access_log  /var/log/nginx/jenkins.access.log;
     error_log   /var/log/nginx/jenkins.error.log;
@@ -81,7 +85,7 @@ server{
 
 # create a link
 
-sudo ln -s /etc/nginx/sites-available/ci.shananadevops.xyz /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/ci.gonje.com.au /etc/nginx/sites-enabled/
 
 
 # test and verify
@@ -135,3 +139,18 @@ Tools to install:
 
             JAVA_HOME: /usr/lib/jvm/java-11-openjdk-amd64
 
+
+
+Web Hook Triggers:
+
+    - Copy the url of
+    - Go to repo settings > add webhook
+        http://54.221.145.255:8080/github-webhook/ # the / at the end is very important
+        content type: application/json
+        event: push
+
+        Note:
+            make sure sg allows 8080 from anywhere, ipv4 and 6 and your ip
+    - go to configure of the job and select github hook trigger and save
+
+        any time you push there would be a build job
