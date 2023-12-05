@@ -1,0 +1,23 @@
+1. Go to https://artifacthub.io/
+
+2. Get ingress-nginx repo
+
+3. helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+4. helm repo update ingress-nginx
+
+5. helm repo list
+
+6. kubectl create ns ingress-nginx
+
+7. helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
+
+8. kubectl get all -n ingress-nginx
+
+9. point your subdomains to the load balancer
+
+10. Deploy the ingress resource in the name space
+
+11. Install cert manager
+
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.13.2/cert-manager.yaml

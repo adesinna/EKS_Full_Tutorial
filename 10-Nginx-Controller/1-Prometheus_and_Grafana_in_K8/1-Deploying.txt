@@ -1,0 +1,18 @@
+1. Create a folder called crds
+
+    deploy all the credentials in the folder, this will install the necessary credentials for prometheus
+
+    kubectl apply -f crds/
+
+
+2. Create a folder called prometheus-operator
+
+    namespace, service account, cluster-role, cluster role binding, deployment and svc
+    will be in this folder. namespace will be monitoring
+
+    kubectl apply -f prometheus-operator/
+
+
+3. Create a folder called prometheus
+
+    create service account

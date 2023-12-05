@@ -13,7 +13,7 @@ read -p "Enter your AWS Secret Access Key: " aws_secret_access_key
 
 aws configure set aws_access_key_id "$aws_access_key_id"
 aws configure set aws_secret_access_key "$aws_secret_access_key"
-aws configure set default.region us-west-1
+aws configure set default.region ap-southeast-2
 aws configure set default.output_format json
 
 # Install kubectl binary

@@ -20,7 +20,7 @@ aws configure
 # Configure AWS CLI with provided values
 aws configure set aws_access_key_id
 aws configure set aws_secret_access_key
-aws configure set default.region us-west-1
+aws configure set default.region ap-southeast-2
 aws configure set default.output_format json
 
 
@@ -67,8 +67,8 @@ iv. VPC # the Virtual Private Cloud
 How to create cluster
 
 eksctl create cluster --name=gonje1 \
-                      --region=us-west-1 \
-                      --zones=us-west-1a,us-west-1b \
+                      --region=ap-southeast-2 \
+                      --zones=ap-southeast-2a,ap-southeast-2b\
                       --without-nodegroup
 
 note:
@@ -83,7 +83,7 @@ To enable and use AWS IAM roles for Kubernetes service accounts on our EKS clust
 we must create & associate OIDC identity provider.
 
 eksctl utils associate-iam-oidc-provider \
-    --region us-west-1 \
+    --region ap-southeast-2 \
     --cluster gonje1 \
     --approve
 
@@ -100,15 +100,15 @@ Creating Node groups
 
 # Create Public Node Group
 eksctl create nodegroup --cluster=gonje1 \
-                       --region=us-west-1 \
+                       --region=ap-southeast-2 \
                        --name=gonje1-ng-public1 \
                        --node-type=t3.medium \
-                       --nodes=2 \
-                       --nodes-min=2 \
-                       --nodes-max=4 \
+                       --nodes=1 \
+                       --nodes-min=1 \
+                       --nodes-max=2 \
                        --node-volume-size=20 \
                        --ssh-access \
-                       --ssh-public-key=kube-demo \
+                       --ssh-public-key=kube-key \
                        --managed \
                        --asg-access \
                        --external-dns-access \
@@ -137,3 +137,7 @@ ssh -i kube-demo.pem ec2-user@<Public-IP-of-Worker-Node>  # add the key before y
 Delete cluster
 
 eksctl delete cluster gonje1
+
+
+# Redo bash.sh
+aws eks update-kubeconfig --region region-code --name my-cluster

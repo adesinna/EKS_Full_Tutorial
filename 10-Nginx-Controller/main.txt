@@ -1,0 +1,52 @@
+- Install Helm
+
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+
+
+
+- Install  nginx ingress using helm
+
+
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+helm repo update ingress-nginx
+
+kubectl create ns ingress-nginx
+
+helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx
+
+kubectl get all -n ingress-nginx
+
+point your subdomains to the load balancer
+
+
+- Install cert manager using helm
+
+helm repo add jetstack https://charts.jetstack.io
+
+helm repo update
+
+helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --set installCRDs=true
+
+kubectl get all -n cert-manager
+
+
+- Create cluster issuer
+
+    kubectl apply -f cluster-issuer.yaml
+
+    kubectl describe clusterissuer letsencrypt-cluster-issuer
+
+
+- Create Certificate for the domain in the namespace
+
+    kubectl apply -f argocd-cert.yaml
+
+    kubectl describe certificate argocd-cert -n argocd
+
+    kubectl get secrets -n argocd # to see the secret which you will use in the ingress
+
+
+ - Cr

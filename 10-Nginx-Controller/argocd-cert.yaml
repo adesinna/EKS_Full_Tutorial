@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-cert
+  namespace: argocd
+spec:
+  dnsNames:
+    - argocd.gonje.com.au
+  secretName: argocd-tls # secret name that will be used in the ingress
+  issuerRef:
+    name: letsencrypt-cluster-issuer # name of the cluster issuer
+    kind: ClusterIssuer
