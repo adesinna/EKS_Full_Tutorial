@@ -116,6 +116,8 @@ eksctl create nodegroup --cluster=gonje1 \
                        --appmesh-access \
                        --alb-ingress-access
 
+eksctl scale nodegroup --cluster=gonje1 --nodes=2 --name=gonje1-ng-public1 # this is to add more nodes, you can scale up
+                                                                           # or down
 
 # List EKS clusters
 eksctl get cluster
@@ -140,4 +142,9 @@ eksctl delete cluster gonje1
 
 
 # Redo bash.sh
-aws eks update-kubeconfig --region region-code --name my-cluster
+aws eks update-kubeconfig --name gonje1 --region ap-southeast-2
+
+
+# selector app deletion
+
+kubectl delete pods --selector=app=customer --field-selector=status.phase!=Running

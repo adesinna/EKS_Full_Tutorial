@@ -1,4 +1,4 @@
-The aim of kubernetes is to deliver you application in form of containers, it does these by using a master node and some
+The aim of kubernetes is to deliver your application in form of containers, it does these by using a master node and some
 worker nodes.
 
 Docker vs container-d:

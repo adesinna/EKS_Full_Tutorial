@@ -13,7 +13,7 @@ Provision:
 
 #!/bin/bash
 sudo apt-get update
-sudo apt install openjdk-11-jdk -y
+sudo apt install openjdk-17-jdk -y
 sudo apt install maven -y
 
 curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee \
@@ -34,7 +34,11 @@ sudo systemctl status jenkins
 
 
 
-
+####
+to uninstall nginx
+sudo apt remove --purge nginx*
+sudo apt autoremove
+####
 
 2. Install Nginx on the Jenkins Instance
 
@@ -154,3 +158,33 @@ Web Hook Triggers:
     - go to configure of the job and select github hook trigger and save
 
         any time you push there would be a build job
+
+upstream jenkins{
+    server 127.0.0.1:3004;
+}
+
+server{
+    listen      80;
+    server_name vendor.gonje.com.au;
+
+    access_log  /var/log/nginx/vendor.access.log;
+    error_log   /var/log/nginx/vendor.error.log;
+
+    proxy_buffers 16 64k;
+    proxy_buffer_size 128k;
+
+    location / {
+        proxy_pass  http://jenkins;
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+        proxy_redirect off;
+
+        proxy_set_header    Host            $host;
+        proxy_set_header    X-Real-IP       $remote_addr;
+        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto https;
+    }
+
+}
+
+
+sudo ln -s /etc/nginx/sites-available/vendor.gonje.com.au /etc/nginx/sites-enabled/
