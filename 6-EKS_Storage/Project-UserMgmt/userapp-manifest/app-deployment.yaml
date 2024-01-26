@@ -19,11 +19,11 @@ spec:
           image: stacksimplify/kube-usermanagement-microservice:1.0.0
           ports:
             - containerPort: 8095
-          env:
+          env: # this place acts like connection strings
             - name: DB_HOSTNAME
-              value: "mysql"
+              value: "mysql"  #the name of the service
             - name: DB_PORT
-              value: "3306"
+              value: "3306" # the port of the service
             - name: DB_NAME
               value: "usermgmt"
             - name: DB_USERNAME

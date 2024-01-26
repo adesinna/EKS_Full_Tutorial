@@ -10,4 +10,4 @@ annotations:
 
 kubectl get pods --selector bu=finance --no-headers | wc -l # no headers is needed to use the wc -l to count correctly
 
-kubectl get all --selector env=prod,bu=finance,tier=frontend # the object that has the combination of these stuffs
+kubectl get all --selector env=prod,bu=finance,tier=frontend # the object that has the intersection of these stuffs

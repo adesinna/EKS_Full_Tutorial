@@ -1,0 +1,13 @@
+Create AWS VPC Using Terraform
+Create AWS EKS Fargate Using Terraform
+Update CoreDNS to run on AWS Fargate
+Deploy App to AWS Fargate
+Deploy Metrics Server to AWS Fargate
+Scale with HPA Based on CPU and Memory
+Improve Stability with Pod Disruption Budget
+Create IAM OIDC provider Using Terraform
+Deploy AWS Load Balancer Controller Using Terraform
+Create Simple Ingress
+Secure Ingress with SSL/TLS
+Create Network Loadbalancer
+Integrate Amazon EFS with AWS Fargate
