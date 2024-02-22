@@ -1,0 +1,72 @@
+Hashicorp Vault is a secret management tools
+
+Secret management is the practice of securely storing, distributing and rotating sensitive information such as password
+API keys and certificates. They are critical aspect of modern software development and are often required to
+authenticate with external services and systems.
+
+Proper secret management is essential for maintaining the confidentiality and integrity of sensitive information and
+reducing the risk of security breaches. Inadequate secret management can result in unauthorized access to sensitive
+information, which can have severe consequences such as data theft, financial losses, and reputation damage.
+
+Secret Management involves implementation of the best security practices such as encryption, access controls and auditing to
+ensure that secrets are protected throughout their lifecycle. Adopting a robust secret management strategy can help
+organizations comply with regulatory requirements such as HIPAA, GDPR and PCI DSS.
+
+
+Hashicorp vault can either be self-hosted or HCP vault can be used for hosted version.
+
+
+How does it work
+
+1. Authenticate
+    Client submits their identity
+
+2. Validate
+    Vault validates client identity against trusted third-party
+
+3. Authorize
+    Client matched against Vault security policy
+
+4. Access
+    Vault grants client access to secrets, keys, based on policies
+
+
+
+
+Use Cases
+
+- General Secret Storage
+    Static Secrets - Long lived and infrequently changed
+    Dynamic Secrets - Lifecycle managed like ssh keys, PKI keys
+
+
+- Data Encryption:
+    Encryption as a service so clients do not have to manage a separate key infrastructure anymore.
+
+- Identity-Based Access
+    Use ACL to setup role based access control RBAC
+    Organization can leverage any trusted resource identity to regulate and manage system and application access and
+    authentication across various clouds, systems and endpoints.
+
+- Key Management
+    The vault key management secrets engine provides a consistent workflow for distribution and lifecycle management of
+    cloud provider keys, allowing organization to maintain centralized control of their keys while leveraging the
+    cryptographic capabilities native to the KMS providers
+
+
+Pros and Cons
+
+Pros
+
+    - Comprehensive feature set
+    - Flexibility
+    - Secured
+    - Community and support
+    - Open source
+    - Established market presence
+
+Cons
+
+    - Complex
+    - Cost
+    - Performance

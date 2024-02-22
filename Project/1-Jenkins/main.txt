@@ -56,7 +56,6 @@ sudo vim /etc/nginx/sites-available/ci.gonje.com.au  # point the record to the i
 
 
 
-
 # paste the code below
 
 upstream jenkins{
@@ -159,32 +158,5 @@ Web Hook Triggers:
 
         any time you push there would be a build job
 
-upstream jenkins{
-    server 127.0.0.1:3004;
-}
-
-server{
-    listen      80;
-    server_name vendor.gonje.com.au;
-
-    access_log  /var/log/nginx/vendor.access.log;
-    error_log   /var/log/nginx/vendor.error.log;
-
-    proxy_buffers 16 64k;
-    proxy_buffer_size 128k;
-
-    location / {
-        proxy_pass  http://jenkins;
-        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
-        proxy_redirect off;
-
-        proxy_set_header    Host            $host;
-        proxy_set_header    X-Real-IP       $remote_addr;
-        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header    X-Forwarded-Proto https;
-    }
-
-}
 
 
-sudo ln -s /etc/nginx/sites-available/vendor.gonje.com.au /etc/nginx/sites-enabled/

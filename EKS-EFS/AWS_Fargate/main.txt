@@ -1,0 +1,9 @@
+What is fargate ?
+
+    It is a managed compute platform.
+
+Why is fargate better than EC2 ?
+
+    There is no need for pathing, and it scales automatically
+
+
