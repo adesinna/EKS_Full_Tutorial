@@ -70,3 +70,32 @@ Cons
     - Complex
     - Cost
     - Performance
+
+
+
+How to set up hashicorp vault in a kubernetes cluster (It is assumed you already have the cluster running and helm is
+already installed)
+
+
+
+Install using helm
+
+kubectl create ns vault
+helm repo add hashicorp https://helm.releases.hashicorp.com
+helm install vault --namespace vault \
+    --set server.image.tag=1.15.1 \
+    --set injector.enabled=true \
+    --set csi.enabled=false \
+    hashicorp/vault
+
+
+
+Initialize and Unseal Vault
+Next we'll initialize and unseal Vault. Make sure to save your root token and unseal key First exec into the vault container:
+
+kubectl exec -it pod/vault-0 -- sh
+
+vault operator init -key-shares=1 -key-threshold=1
+vault operator unseal <UNSEAL_KEY>
+# Example:
+vault operator unseal ox7fCUNO52KptEPJkycF1miOI28pZEUWQQms5kLkgCY=
