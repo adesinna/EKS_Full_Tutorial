@@ -21,7 +21,7 @@ spec:
             - containerPort: 8095
           env: # this place acts like connection strings
             - name: DB_HOSTNAME
-              value: "mysql"  #the name of the service
+              value: "mysql"  #the name of the service of the db
             - name: DB_PORT
               value: "3306" # the port of the service
             - name: DB_NAME
